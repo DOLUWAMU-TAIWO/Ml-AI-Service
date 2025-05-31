@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  aiservice:
+    build:
+      context: .
+    image: aiservice
+    ports:
+      - "5555:5555"
+    env_file:
+      - .env
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - GOOGLE_VISION_CREDENTIALS_PATH=/app/credentials.json
+    volumes:
+      - ${GOOGLE_VISION_CREDENTIALS_PATH}:/app/credentials.json:ro
+    restart: unless-stopped
